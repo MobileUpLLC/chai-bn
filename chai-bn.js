@@ -23,7 +23,8 @@ module.exports = function (BN) {
         return value;
       } else if (typeof value === 'string') {
         return new BN(value);
-      // BN also supports conversion from e.g. JavaScript numbers, but only for small values. We disable that entirely
+      } else if (typeof value == 'number' && value < 0x20000000000000) {
+        return new BN(value);
       } else {
         new chai.Assertion(value).assert(false,
           'expected #{act} to be an instance of BN or string');
